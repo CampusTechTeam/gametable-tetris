@@ -12,6 +12,7 @@
 # with multitet.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
+import libavg
 
 try:
     import multitet
@@ -25,4 +26,4 @@ except ImportError:
         sys.exit(1)
 
 if __name__ == '__main__':
-    multitet.Multitet.start()
+    libavg.app.App().run(multitet.Multitet(), app_resolution='', app_fullscreen='true')

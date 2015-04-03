@@ -795,14 +795,6 @@ class Multitet(app.MainDiv):
         return Point2D(self.size.x*fraction_x + offset_x,
             self.size.y*fraction_y + offset_y)
 
-    def _enter(self):
-        if not self.game:
-            self.start_game()
-        self.game.run()
-
-    def _leave(self):
-        self.game.pause()
-
     def show(self, node):
         node.unlink()
         self.appendChild(node)
@@ -868,4 +860,4 @@ class Multitet(app.MainDiv):
 
 
 if __name__ == '__main__':
-    Multitet.start()
+    app.App().run(Multitet())

@@ -726,6 +726,7 @@ class Multitet(app.MainDiv):
 
         self.game_over_box = self.create_game_over_box()
         self.about_box = self.create_about_box()
+        self.__setupMultitouch()
         self.start_game()
 
     def create_words(self, parent, text, scale=1.0, alignment='left', **props):
@@ -858,6 +859,25 @@ class Multitet(app.MainDiv):
             self.set_level(self.level + 1)
             self.ticks_to_next_level = TICKS_PER_LEVEL
 
+    def __setupMultitouch(self):
+        if app.instance.settings.getBoolean('multitouch_enabled'):
+            return
+
+        import platform
+        import os
+
+        if platform.system() == 'Linux':
+            os.putenv('AVG_MULTITOUCH_DRIVER', 'XINPUT')
+        elif platform.system() == 'Windows':
+            os.putenv('AVG_MULTITOUCH_DRIVER', 'WIN7TOUCH')
+        else:
+            os.putenv('AVG_MULTITOUCH_DRIVER', 'TUIO')
+
+        try:
+            player.enableMultitouch()
+        except Exception, e:
+            os.putenv('AVG_MULTITOUCH_DRIVER', 'TUIO')
+            player.enableMultitouch()
 
 if __name__ == '__main__':
     app.App().run(Multitet())
